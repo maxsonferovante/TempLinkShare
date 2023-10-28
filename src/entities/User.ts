@@ -12,6 +12,14 @@ export interface UserCreate {
     password: string;
 }
 
+export interface userCreatedResponse {
+    id: string;
+    name: string;
+    email: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export class UserModel implements User {
     public id!: string;
     public name!: string;
