@@ -7,6 +7,22 @@ import { AppError } from "../../erros/AppError";
 const prisma = new PrismaClient();
 
 export class PostgresUserRepository implements IAUserRepository {
+    findById(id: string): Promise<User | null> {
+        try {
+            const userExist = prisma.user.findFirst({
+                where: {
+                    id: id,
+                },
+            });
+            if (userExist === null) {
+                console.log("User not already exists"); ''
+                throw new AppError("User not already exists", 404);
+            }
+            return userExist;
+        } catch (error: any) {
+            throw new AppError(error.message, error.statusCode);
+        }
+    }
     async findByEmail(email: string): Promise<User | null> {
         try {
             const userExist = await prisma.user.findFirst({
