@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { createUserSchema } from './CreateUseSchema'
 import { CreateUserUseCase } from './CreateUserUseCase';
-import { error } from 'console';
+import { AppError } from '../../erros/AppError';
 import { ValidationError } from 'yup';
 
 export class CreateUserController {
@@ -30,8 +30,11 @@ export class CreateUserController {
                     })
                 })
             }
-            if (error instanceof Error) {
-                return response.status(409).json({ error: error.message })
+            if (error instanceof AppError) {
+                return response.status(409).json({
+                    message: error.message,
+                    statusCode: error.statusCode,
+                })
             }
             return response.status(500).json({ error: 'Internal Server Error' })
         }
