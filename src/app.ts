@@ -3,13 +3,14 @@ import { NextFunction } from "express-serve-static-core";
 import express from "express";
 
 import { userRouter } from "./routes/userRouter";
+import { authenticateRouter } from "./routes/authenticateRouter"
 
 const app = express();
 
 app.use(express.json());
 
 app.use("/user", userRouter);
-
+app.use("/authenticate", authenticateRouter);
 
 
 app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
