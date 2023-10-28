@@ -15,11 +15,28 @@ export class PostgresUserRepository implements IAUserRepository {
                 },
             });
             if (userExist !== null) {
+                console.log("User already exists"); ''
                 throw new AppError("User already exists", 409);
             }
             return userExist;
         } catch (error: any) {
-            console.log(error);
+            throw new AppError(error.message, error.statusCode);
+        }
+    }
+    async getByEmail(email: string): Promise<User | null> {
+
+        try {
+            const userExist = await prisma.user.findFirst({
+                where: {
+                    email: email,
+                },
+            });
+            if (userExist === null) {
+                console.log("User not already exists"); ''
+                throw new AppError("User not already exists", 409);
+            }
+            return userExist;
+        } catch (error: any) {
             throw new AppError(error.message, error.statusCode);
         }
     }
