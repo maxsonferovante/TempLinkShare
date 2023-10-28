@@ -1,9 +1,10 @@
 import { app } from "../../../src/app";
 
-import { describe, test, expect, beforeAll, beforeEach } from "@jest/globals";
+import { describe, test, expect, beforeAll, beforeEach, afterAll } from "@jest/globals";
 import request from "supertest";
 
 import { PrismaClient } from "@prisma/client";
+import { after } from "node:test";
 
 const prisma = new PrismaClient();
 
@@ -13,6 +14,11 @@ describe("Criação de Usuário - Integração", () => {
     });
     beforeEach(async () => {
         await prisma.user.deleteMany();
+    });
+
+    afterAll(async () => {
+        await prisma.user.deleteMany();
+        await prisma.$disconnect();
     });
 
     test("Deve ser capaz de criar um novo usuário", async () => {
@@ -56,7 +62,7 @@ describe("Criação de Usuário - Integração", () => {
             email: "test@test.com",
             password: "12345677"
         });
-        console.log(response.body);
+
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
             expect.objectContaining({
@@ -76,7 +82,7 @@ describe("Criação de Usuário - Integração", () => {
             email: "",
             password: "12345677"
         });
-        console.log(response.body);
+
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
             expect.objectContaining({
@@ -96,7 +102,7 @@ describe("Criação de Usuário - Integração", () => {
             email: "test@test.com",
             password: ""
         });
-        console.log(response.body);
+
         expect(response.statusCode).toBe(400);
         expect(response.body).toEqual(
             expect.objectContaining({
