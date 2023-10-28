@@ -33,12 +33,7 @@ export class CreateUserController {
             if (error instanceof Error) {
                 return response.status(409).json({ error: error.message })
             }
-        }
-        finally {
-            return response.status(500).json({
-                status: "error",
-                message: "Internal Server Error"
-            })
+            return response.status(500).json({ error: 'Internal Server Error' })
         }
     }
 }
