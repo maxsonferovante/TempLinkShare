@@ -76,7 +76,7 @@ export class BlackBlazeBucketUpload implements IAUploadProvider {
             );
             console.info("Upload completed successfully.");
             return {
-                url: `${process.env.ENDPOINT_S3}/${data.originalname}`,
+                url: `https://${process.env.BACKBLAZE_BUCKET}.s3.${process.env.REGION}.backblazeb2.com/${process.env.UPLOAD_FOLDER}/${data.originalname}`,
                 path: file.Key
             } as IUploadFileResponseDTO
 
