@@ -3,8 +3,7 @@ import { PostgresUploadRepository } from "../../repositories/implementations/Pos
 import { IUploadFileRequestDTO } from "./IUploadFileRequestDTO";
 
 import { IAUploadProvider } from "../../providers/IABucketUploadProvider"
-
-
+import { normalizeName } from "../../ultis/normalizeName";
 
 
 export class UploadFileUseCase {
@@ -14,6 +13,12 @@ export class UploadFileUseCase {
     ) { }
     async execute(data: IUploadFileRequestDTO) {
         try {
+            if (data.buffer.length > 1024 * 1024 * Number(process.env.LIMIT_SIZE)) {
+                throw new AppError(`File size is too large. O limit max is ${process.env.LIMIT_SIZE}`, 400);
+            }
+
+            data.originalname = normalizeName(data.originalname);
+
             const responseUploaded = await this.bucketUpload.uploadFile({
                 originalname: data.originalname,
                 buffer: data.buffer,
