@@ -18,10 +18,6 @@ export class UploadFileController {
             if (!file) {
                 throw new AppError('File not found', 404);
             }
-            if (file.size > 1024 * 1024 * Number(process.env.LIMIT_SIZE)) {
-                throw new AppError(`File size is too large. O limit max is ${process.env.LIMIT_SIZE}`, 400);
-            }
-
 
             const responseUpload = await this.uploadFileUseCase.execute({
                 originalname: file.originalname,
