@@ -130,3 +130,5 @@ dist
 .pnp.*
 
 postgres-data
+
+/tests/integration/File/exemple.mp4
