@@ -19,7 +19,7 @@ export async function ensureAuthenticated(request: Request, response: Response, 
         const userRepository = new PostgresUserRepository()
         const user = await userRepository.findById(decoded.id)
         if (!user) {
-            return response.status(401).json({ message: 'I' })
+            return response.status(401).json({ message: 'User not found' })
         }
         request.user = {
             id: decoded.id as string
