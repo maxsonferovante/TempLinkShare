@@ -35,7 +35,7 @@ describe("Upload de Arquivos - Integração", () => {
 
     test("Deve ser capaz de fazer upload de um arquivo", async () => {
         const responseUpload = await request(app).post("/file/upload").set('Authorization', `Bearer ${token}`)
-            .attach('file', './tests/integration/File/exemple.msi');
+            .attach('file', './tests/integration/File/exemple.zip');
         expect(responseUpload.status).toBe(201);
         expect(responseUpload.body).toHaveProperty('responseUploaded');
         expect(responseUpload.body).toHaveProperty('experationTime');

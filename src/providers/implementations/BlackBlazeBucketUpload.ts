@@ -31,9 +31,16 @@ export class BlackBlazeBucketUpload implements IAUploadProvider {
             );
             uploadId = multipartUpload.UploadId;
             const uploadPromises = [];
-            // Divide o arquivo em 5 partes
-            const partSize = Math.ceil(data.buffer.length / 5);
-            for (let i = 0; i < 5; i++) {
+
+            let numPartsLeft = 5;
+            let partSize = Math.ceil(data.buffer.length / numPartsLeft);
+
+            if (!(partSize > 1024 * 1024 * 5)) {
+                numPartsLeft = 1;
+                partSize = Math.ceil(data.buffer.length / numPartsLeft);
+            }
+
+            for (let i = 0; i < numPartsLeft; i++) {
                 const star = partSize * i;
                 const end = Math.min(star + partSize, data.buffer.length);
                 uploadPromises.push(
