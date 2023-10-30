@@ -131,4 +131,8 @@ dist
 
 postgres-data
 
-/tests/integration/File/exemple.mp4
+tests/integration/File/exemple.*
+
+prisma/migrations/
+prisma/migrations/migration_lock.toml
+package-lock.json
