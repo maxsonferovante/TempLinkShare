@@ -14,7 +14,7 @@ export class PostgresUploadRepository implements IAUploadRepository {
                 data: {
                     name: file.name,
                     url: file.url,
-                    expirationTime: file.experationTime,
+                    expirationDate: file.expirationDate,
                     authorId: file.authorId,
                 },
             });

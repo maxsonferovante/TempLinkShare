@@ -24,7 +24,7 @@ model File {
   id             String   @id @default(uuid())
   name           String
   url            String
-  expirationTime Int
+  expirationDate DateTime
   expired        Boolean  @default(false)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @default(now())

@@ -5,6 +5,8 @@ import { IUploadFileRequestDTO } from "./IUploadFileRequestDTO";
 import { IAUploadProvider } from "../../providers/IABucketUploadProvider"
 import { normalizeName } from "../../ultis/normalizeName";
 
+import { ExpirationService } from "../../services/ExpirationService/ExpirationService"
+import moment from "moment";
 
 export class UploadFileUseCase {
     constructor(
@@ -24,15 +26,16 @@ export class UploadFileUseCase {
                 buffer: data.buffer,
                 mimetype: data.mimetype,
             });
-            const upload = await this.uploadRespository.save({
+            const expirationDate = ExpirationService.getExpirationDate()
+            await this.uploadRespository.save({
                 name: data.originalname,
-                experationTime: Number(process.env.EXPERATION_TIME) || 1,
+                expirationDate: expirationDate,
                 url: responseUploaded.url,
                 authorId: data.authorId,
             });
             return {
                 responseUploaded,
-                experationTime: `${process.env.EXPERATION_TIME} hour(s)`,
+                experationData: moment(expirationDate).format('DD/MM/YYYY HH:mm:ss'),
             };
         } catch (error) {
             if (error instanceof AppError) {

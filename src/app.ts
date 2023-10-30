@@ -6,7 +6,13 @@ import { userRouter } from "./routes/userRouter";
 import { authenticateRouter } from "./routes/authenticateRouter"
 import { uploadRouter } from "./routes/uploadRouter"
 
+import { ExpirationServiceCronJob } from "./services/ExpirationService/ExpirarionServiceCronJob"
+
 const app = express();
+
+// inicia a tarefa de verificação de expiração de arquivos, de acordo com o tempo definido no arquivo .env
+// start the task of checking the expiration of files, according to the time defined in the .env file
+ExpirationServiceCronJob.getInstance().start();
 
 app.use(express.json());
 
