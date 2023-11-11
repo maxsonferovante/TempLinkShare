@@ -1,5 +1,5 @@
 import { IAUserRepository } from "../../repositories/IAUserRepository";
-import { compare } from 'bcrypt';
+import { CryptoPassword } from "../../ultis/cryptoPassword";
 import { IAuthenticateUserRequestDTO } from "./IAuthenticateUserRequestDTO";
 import { IAuthenticateUserResponseDTO } from "./IAuthenticateUserResponseDTO";
 import { sign } from "jsonwebtoken";
@@ -20,7 +20,7 @@ export class AuthenticateUserUseCase {
                 throw new AppError("Email or password incorrect!", 404);
             }
 
-            const passwordMatch = await compare(data.password, userExist.password);
+            const passwordMatch = CryptoPassword.getInstance().comparePassword(data.password, userExist.password);
             if (!passwordMatch) {
                 throw new AppError("Email or password incorrect!", 404);
             }

@@ -1,4 +1,4 @@
-import { hash } from 'bcrypt'
+import { CryptoPassword } from "../../ultis/cryptoPassword";
 
 import { UserCreate } from "../../entities/User";
 import { AppError } from "../../erros/AppError";
@@ -20,7 +20,7 @@ export class CreateUserUseCase {
             if (userAlreadyExists) {
                 throw new AppError("User already exists!", 409);
             }
-            const passwordHash = await hash(data.password, 8);
+            const passwordHash = CryptoPassword.getInstance().hashPassword(data.password);
 
             const user: UserCreate = {
                 name: data.name,
