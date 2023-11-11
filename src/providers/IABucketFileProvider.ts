@@ -1,3 +1,5 @@
+import { File } from "../entities/File";
+
 export interface IUploadFileResponseDTO {
     url: string;
     path: string;
@@ -17,5 +19,5 @@ export interface IListFilesResponseDTO {
 export interface IABucketFileProvider {
     uploadFile(file: IfileUpload): Promise<IUploadFileResponseDTO>;
     deleteFile(file: File): Promise<void>;
-    listFiles(file: File[]): Promise<IListFilesResponseDTO[]>;
+    listFiles(files: File[]): Promise<IListFilesResponseDTO[]>;
 }

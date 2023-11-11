@@ -23,7 +23,38 @@ const s3 = new S3Client({
 })
 
 export class BlackBlazeBucketFile implements IABucketFileProvider {
+    deleteFile(file: File): Promise<void> {
+        throw new Error('Method not implemented.');
+    }
+    async listFiles(files: File[]): Promise<IListFilesResponseDTO[]> {
+        const existsFiles: IListFilesResponseDTO[] = [];
+        try {
+            for (const file of files) {
+                const headObjectCommand = new HeadObjectCommand({
+                    Bucket: process.env.BACKBLAZE_BUCKET,
+                    Key: `${process.env.UPLOAD_FOLDER}/${file.name}`,
+                });
+                try {
+                    const data = await s3.send(headObjectCommand);
+                    existsFiles.push({
+                        name: file.name,
+                        size: data.ContentLength || 0,
+                        mimetype: data.ContentType || '',
+                        location: `https://${process.env.BACKBLAZE_BUCKET}.s3.${process.env.REGION}.backblazeb2.com/${process.env.UPLOAD_FOLDER}/${file.name}`,
+                    })
+
+                } catch (NotFound) {
+                    continue;
+                }
+            }
+            return existsFiles;
+        } catch (error) {
+            console.error(error)
+            throw new Error(error as string)
+        }
+    }
     async uploadFile(data: IfileUpload): Promise<IUploadFileResponseDTO> {
+
         let uploadId;
         try {
             const multipartUpload = await s3.send(
@@ -98,35 +129,7 @@ export class BlackBlazeBucketFile implements IABucketFileProvider {
         }
     }
 
-    async deleteFile(file: File): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
 
-    async listFiles(files: File[]): Promise<IListFilesResponseDTO[]> {
-        const existsFiles: IListFilesResponseDTO[] = [];
-        try {
-            for (const file of files) {
-                const headObjectCommand = new HeadObjectCommand({
-                    Bucket: process.env.BACKBLAZE_BUCKET,
-                    Key: `${process.env.UPLOAD_FOLDER}/${file.name}`,
-                });
-                try {
-                    const data = await s3.send(headObjectCommand);
-                    existsFiles.push({
-                        name: file.name,
-                        size: data.ContentLength || 0,
-                        mimetype: data.ContentType || '',
-                        location: `https://${process.env.BACKBLAZE_BUCKET}.s3.${process.env.REGION}.backblazeb2.com/${process.env.UPLOAD_FOLDER}/${file.name}`,
-                    })
 
-                } catch (NotFound) {
-                    continue;
-                }
-            }
-            return existsFiles;
-        } catch (error) {
-            console.error(error)
-            throw new Error(error as string)
-        }
-    }
+
 }

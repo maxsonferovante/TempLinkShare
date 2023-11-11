@@ -2,7 +2,7 @@ export interface File {
     id: string;
     name: string;
     url: string;
-    expirationDate: number;
+    expirationDate: Date;
     expired: boolean;
     createdAt: Date;
     updatedAt: Date;
@@ -12,7 +12,7 @@ export interface File {
 export interface FileCreate {
     name: string;
     url: string;
-    expirationDate: number;
+    expirationDate: Date;
     authorId: string;
 }
 
@@ -20,7 +20,7 @@ export class FileModel implements File {
     id: string;
     name: string;
     url: string;
-    expirationDate: number;
+    expirationDate: Date;
     expired: boolean;
     createdAt: Date;
     updatedAt: Date;
@@ -30,7 +30,7 @@ export class FileModel implements File {
         id: string,
         name: string,
         url: string,
-        expirationDate: number,
+        expirationDate: Date,
         expired: boolean,
         createdAt: Date,
         updatedAt: Date,

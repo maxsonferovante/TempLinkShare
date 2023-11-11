@@ -1,4 +1,4 @@
-import { FileCreate } from "../entities/File";
+import { FileCreate, File } from "../entities/File";
 
 
 export interface IAFilesRepository {
