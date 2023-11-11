@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { DeleteObjectsCommand, ObjectIdentifier, S3Client } from "@aws-sdk/client-s3";
-import moment from "moment";
+import { filterFileIsAfterNow } from "../../ultis/filterFileIsAfterNow";
 
 export class ExpirationService {
 
@@ -24,11 +24,9 @@ export class ExpirationService {
                 expired: false,
             }
         });
-        const filesExpired = files.filter(file => {
-            const expirationDate = moment(file.expirationDate);
-            const now = moment();
-            return now.isAfter(expirationDate);
-        });
+
+        const filesExpired = filterFileIsAfterNow(files);
+
         if (filesExpired.length > 0) {
             await this.deleteExpiredFiles(filesExpired)
         }
