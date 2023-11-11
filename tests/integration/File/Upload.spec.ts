@@ -1,12 +1,18 @@
-import { app } from "../../../src/app";
-import { UserCreate } from "../../../src/entities/User";
-import { describe, test, expect, beforeAll, beforeEach, afterAll } from "@jest/globals";
+/**
+ * @jest-environment ./prisma/prisma-environment-jest
+ */
 import request from "supertest";
-import { CryptoPassword } from '../../../src/ultis/cryptoPassword'
-import { sign } from "jsonwebtoken";
+import { describe, test, expect, beforeAll, afterAll } from "@jest/globals";
+
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+import { app } from "../../../src/app";
+
+import { CryptoPassword } from '../../../src/ultis/cryptoPassword'
+import { sign } from "jsonwebtoken";
+import { UserCreate } from "../../../src/entities/User";
+
+
 
 const userCreateTests: UserCreate = {
     name: "Testes",
@@ -16,8 +22,9 @@ const userCreateTests: UserCreate = {
 let token: string;
 
 describe("Upload de Arquivos - Integração", () => {
+    const prisma = new PrismaClient();
+
     beforeAll(async () => {
-        await prisma.user.deleteMany();
         const passwordHash = CryptoPassword.getInstance().hashPassword(userCreateTests.password);
         const userCreate = await prisma.user.create({
             data: {
@@ -29,7 +36,7 @@ describe("Upload de Arquivos - Integração", () => {
         token = sign({ id: userCreate.id }, process.env.SECRECT_TOKEN || '', { expiresIn: process.env.EXPIRES_IN_TOKEN });
     });
     afterAll(async () => {
-        await prisma.user.deleteMany();
+
         await prisma.$disconnect();
     });
 
@@ -37,7 +44,15 @@ describe("Upload de Arquivos - Integração", () => {
         const responseUpload = await request(app).post("/file/upload").set('Authorization', `Bearer ${token}`)
             .attach('file', './tests/integration/File/exemple.zip');
         expect(responseUpload.status).toBe(201);
-        expect(responseUpload.body).toHaveProperty('responseUploaded');
-        expect(responseUpload.body).toHaveProperty('experationTime');
+        expect(responseUpload.body).toEqual(
+            expect.objectContaining({
+                experationData: expect.any(String),
+                responseUploaded: expect.objectContaining({
+                    path: expect.any(String),
+                    url: expect.any(String),
+                })
+            })
+        );
+
     });
 });

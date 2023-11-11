@@ -1,25 +1,18 @@
+/**
+ * @jest-environment ./prisma/prisma-environment-jest
+ */
+import request from "supertest";
+import { describe, test, expect, beforeAll, beforeEach, afterAll } from "@jest/globals";
+
 import { app } from "../../../src/app";
 
-import { describe, test, expect, beforeAll, beforeEach, afterAll } from "@jest/globals";
-import request from "supertest";
 import { PrismaClient } from "@prisma/client";
 
 
-const prisma = new PrismaClient();
+
 
 describe("Criação de Usuário - Integração", () => {
-    beforeAll(async () => {
-        await prisma.user.deleteMany();
-    });
-    beforeEach(async () => {
-        await prisma.user.deleteMany();
-    });
-
-    afterAll(async () => {
-        await prisma.user.deleteMany();
-        await prisma.$disconnect();
-    });
-
+    const prisma = new PrismaClient();
     test("Deve ser capaz de criar um novo usuário", async () => {
         const response = await request(app).post("/user/register").send({
             name: "User Example",

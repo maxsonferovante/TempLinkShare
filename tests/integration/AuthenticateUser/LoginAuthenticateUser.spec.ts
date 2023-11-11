@@ -1,13 +1,18 @@
-import { app } from "../../../src/app";
-import { UserCreate } from "../../../src/entities/User";
-import { describe, test, expect, beforeAll, beforeEach, afterAll } from "@jest/globals";
+/**
+ * @jest-environment ./prisma/prisma-environment-jest
+ */
+
 import request from "supertest";
-import { CryptoPassword } from '../../../src/ultis/cryptoPassword'
+import { describe, test, expect, beforeAll, beforeEach, afterAll } from "@jest/globals";
 import { PrismaClient } from "@prisma/client";
 
+import { app } from "../../../src/app";
+import { UserCreate } from "../../../src/entities/User";
+import { CryptoPassword } from '../../../src/ultis/cryptoPassword'
 
 
-const prisma = new PrismaClient();
+
+
 
 const userCreateTests: UserCreate = {
     name: "Testes",
@@ -16,8 +21,10 @@ const userCreateTests: UserCreate = {
 }
 
 describe("Autenticação de Usuário - Integração", () => {
+    const prisma = new PrismaClient();
+
     beforeAll(async () => {
-        await prisma.user.deleteMany();
+
         const passwordHash = CryptoPassword.getInstance().hashPassword(userCreateTests.password);
         const userCreate = await prisma.user.create({
 
@@ -27,11 +34,6 @@ describe("Autenticação de Usuário - Integração", () => {
                 password: passwordHash,
             }
         });
-    });
-
-    afterAll(async () => {
-        await prisma.user.deleteMany();
-        await prisma.$disconnect();
     });
 
     test("Deve ser capaz de autenticar um usuário", async () => {

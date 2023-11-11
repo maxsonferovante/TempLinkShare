@@ -1,15 +1,10 @@
 import { Request, Response } from "express";
 import { NextFunction } from "express-serve-static-core";
 import express from "express";
-
 import { routes } from './routes';
-import { ExpirationServiceCronJob } from "./services/ExpirationService/ExpirarionServiceCronJob"
 
 const app = express();
 
-// inicia a tarefa de verificação de expiração de arquivos, de acordo com o tempo definido no arquivo .env
-// start the task of checking the expiration of files, according to the time defined in the .env file
-ExpirationServiceCronJob.getInstance().start();
 
 app.use(express.json());
 app.use(routes);
