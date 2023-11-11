@@ -2,7 +2,7 @@ import { app } from "../../../src/app";
 import { UserCreate } from "../../../src/entities/User";
 import { describe, test, expect, beforeAll, beforeEach, afterAll } from "@jest/globals";
 import request from "supertest";
-import { hash } from 'bcrypt'
+import { CryptoPassword } from '../../../src/ultis/cryptoPassword'
 import { PrismaClient } from "@prisma/client";
 
 
@@ -18,7 +18,7 @@ const userCreateTests: UserCreate = {
 describe("Autenticação de Usuário - Integração", () => {
     beforeAll(async () => {
         await prisma.user.deleteMany();
-        const passwordHash = await hash(userCreateTests.password, 8)
+        const passwordHash = CryptoPassword.getInstance().hashPassword(userCreateTests.password);
         const userCreate = await prisma.user.create({
 
             data: {

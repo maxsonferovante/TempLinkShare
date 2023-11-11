@@ -2,9 +2,8 @@ import { app } from "../../../src/app";
 
 import { describe, test, expect, beforeAll, beforeEach, afterAll } from "@jest/globals";
 import request from "supertest";
-
 import { PrismaClient } from "@prisma/client";
-import { after } from "node:test";
+
 
 const prisma = new PrismaClient();
 
