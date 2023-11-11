@@ -1,11 +1,11 @@
 import { UploadFileController } from './UploadFileController';
 import { UploadFileUseCase } from './UploadFileUseCase';
-import { BlackBlazeBucketUpload } from '../../providers/implementations/BlackBlazeBucketUpload';
-import { PostgresUploadRepository } from '../../repositories/implementations/PostgresUploadRepository'
+import { BlackBlazeBucketFile } from '../../providers/implementations/BlackBlazeBucketFile';
+import { PostgresFileRepository } from '../../repositories/implementations/PostgresFileRepository'
 
 
-const blackBlazeBucketUpload = new BlackBlazeBucketUpload();
-const postgresUploadRepository = new PostgresUploadRepository();
+const blackBlazeBucketUpload = new BlackBlazeBucketFile();
+const postgresUploadRepository = new PostgresFileRepository();
 
 const uploadFileUseCase = new UploadFileUseCase(
     postgresUploadRepository,

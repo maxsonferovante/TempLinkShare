@@ -1,8 +1,8 @@
 import { AppError } from "../../erros/AppError";
-import { PostgresUploadRepository } from "../../repositories/implementations/PostgresUploadRepository";
+import { PostgresFileRepository } from "../../repositories/implementations/PostgresFileRepository";
 import { IUploadFileRequestDTO } from "./IUploadFileRequestDTO";
 
-import { IAUploadProvider } from "../../providers/IABucketUploadProvider"
+import { IABucketFileProvider } from "../../providers/IABucketFileProvider"
 import { normalizeName } from "../../ultis/normalizeName";
 
 import { ExpirationService } from "../../services/ExpirationService/ExpirationService"
@@ -10,8 +10,8 @@ import moment from "moment";
 
 export class UploadFileUseCase {
     constructor(
-        private uploadRespository: PostgresUploadRepository,
-        private bucketUpload: IAUploadProvider
+        private uploadRespository: PostgresFileRepository,
+        private bucketUpload: IABucketFileProvider
     ) { }
     async execute(data: IUploadFileRequestDTO) {
         try {

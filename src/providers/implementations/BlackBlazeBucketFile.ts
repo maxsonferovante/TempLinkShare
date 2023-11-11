@@ -1,12 +1,15 @@
+import { File } from '../../entities/File'
+
 import {
-    IAUploadProvider, IUploadFileResponseDTO,
+    IABucketFileProvider, IListFilesResponseDTO, IUploadFileResponseDTO,
     IfileUpload
-} from "../IABucketUploadProvider"
+} from "../IABucketFileProvider"
 
 import {
     AbortMultipartUploadCommand,
     CompleteMultipartUploadCommand,
     CreateMultipartUploadCommand,
+    HeadObjectCommand,
     S3Client, UploadPartCommand,
 } from '@aws-sdk/client-s3'
 
@@ -19,7 +22,7 @@ const s3 = new S3Client({
     }
 })
 
-export class BlackBlazeBucketUpload implements IAUploadProvider {
+export class BlackBlazeBucketFile implements IABucketFileProvider {
     async uploadFile(data: IfileUpload): Promise<IUploadFileResponseDTO> {
         let uploadId;
         try {
@@ -98,7 +101,32 @@ export class BlackBlazeBucketUpload implements IAUploadProvider {
     async deleteFile(file: File): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    async listFiles(): Promise<IUploadFileResponseDTO[]> {
-        throw new Error("Method not implemented.");
+
+    async listFiles(files: File[]): Promise<IListFilesResponseDTO[]> {
+        const existsFiles: IListFilesResponseDTO[] = [];
+        try {
+            for (const file of files) {
+                const headObjectCommand = new HeadObjectCommand({
+                    Bucket: process.env.BACKBLAZE_BUCKET,
+                    Key: `${process.env.UPLOAD_FOLDER}/${file.name}`,
+                });
+                try {
+                    const data = await s3.send(headObjectCommand);
+                    existsFiles.push({
+                        name: file.name,
+                        size: data.ContentLength || 0,
+                        mimetype: data.ContentType || '',
+                        location: `https://${process.env.BACKBLAZE_BUCKET}.s3.${process.env.REGION}.backblazeb2.com/${process.env.UPLOAD_FOLDER}/${file.name}`,
+                    })
+
+                } catch (NotFound) {
+                    continue;
+                }
+            }
+            return existsFiles;
+        } catch (error) {
+            console.error(error)
+            throw new Error(error as string)
+        }
     }
 }

@@ -8,9 +8,14 @@ export interface IfileUpload {
     buffer: Buffer;
     mimetype: string;
 }
-
-export interface IAUploadProvider {
+export interface IListFilesResponseDTO {
+    name: string;
+    size: number;
+    mimetype: string;
+    location: string;
+}
+export interface IABucketFileProvider {
     uploadFile(file: IfileUpload): Promise<IUploadFileResponseDTO>;
     deleteFile(file: File): Promise<void>;
-    listFiles(): Promise<IUploadFileResponseDTO[]>;
+    listFiles(file: File[]): Promise<IListFilesResponseDTO[]>;
 }
