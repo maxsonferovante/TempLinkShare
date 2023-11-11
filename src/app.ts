@@ -2,10 +2,7 @@ import { Request, Response } from "express";
 import { NextFunction } from "express-serve-static-core";
 import express from "express";
 
-import { userRouter } from "./routes/userRouter";
-import { authenticateRouter } from "./routes/authenticateRouter"
-import { uploadRouter } from "./routes/uploadRouter"
-
+import { routes } from './routes';
 import { ExpirationServiceCronJob } from "./services/ExpirationService/ExpirarionServiceCronJob"
 
 const app = express();
@@ -15,11 +12,7 @@ const app = express();
 ExpirationServiceCronJob.getInstance().start();
 
 app.use(express.json());
-
-app.use("/user", userRouter);
-app.use("/authenticate", authenticateRouter);
-app.use("/file", uploadRouter)
-
+app.use(routes);
 
 app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
     if (err instanceof Error) {
