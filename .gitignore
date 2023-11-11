@@ -136,3 +136,4 @@ tests/integration/File/exemple.*
 prisma/migrations/
 prisma/migrations/migration_lock.toml
 package-lock.json
+package-lock.json

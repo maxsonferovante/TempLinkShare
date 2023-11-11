@@ -3,7 +3,7 @@ services:
   postgres:
     container_name: templinkshare-postgres
     image: postgres
-    restart: unless-stopped
+    restart: always
     environment:
       POSTGRES_USER: johndoe
       POSTGRES_PASSWORD: randompassword
@@ -12,3 +12,19 @@ services:
       - 5432:5432
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
+    networks:
+      - templinkshare-network
+  app:
+    build: .
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    volumes:
+      - .:/usr/app
+      - ./prisma:/usr/local/bin/prisma
+    networks:
+      - templinkshare-network
+networks:
+  templinkshare-network:
+    driver: bridge
