@@ -3,5 +3,4 @@ export interface ISendingEmailLinkRequestDTO {
     from: string;
     email: string;
     idFile: string;
-    experiedTime: string;
 }

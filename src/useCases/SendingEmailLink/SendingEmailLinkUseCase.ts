@@ -26,26 +26,6 @@ export class SendingEmailLinkUseCase {
                 throw new AppError('File expired', 409)
             }
 
-            if (data.experiedTime !== '') {
-
-                const date = new Date();
-                date.setMinutes(date.getMinutes() + Number(data.experiedTime));
-                const now = new Date()
-                if (date < now) {
-                    throw new AppError('The expiration time cannot be earlier than the current date', 409)
-                }
-                if (date > new Date(now.setDate(now.getMinutes() + Number(process.env.EXPERATION_TIME)))) {
-                    throw new AppError(`The expiration time cannot be greater than ${process.env.EXPERATION_TIM} minutes`, 409)
-                }
-                const newExperationDate = new Date();
-                newExperationDate.setMinutes(date.getMinutes() + Number(data.experiedTime));
-
-                file = await this.filesRepository.updateExpirationDate({
-                    fileId: file.id,
-                    authorId: file.authorId,
-                    newExperationDate: newExperationDate,
-                });
-            }
             await this.mailTransporterProvider.sendMail({
                 to: data.email,
                 from: data.from,

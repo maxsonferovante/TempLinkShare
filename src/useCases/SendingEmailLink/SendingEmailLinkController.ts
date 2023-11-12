@@ -14,7 +14,7 @@ export class SendingEmailLinkController {
     async handle(request: Request, response: Response): Promise<Response> {
         try {
             const emailBody = await SendingEmailLinkSchema.validate(request.body, { abortEarly: false });
-            const { email, idFile, experiedTime } = emailBody;
+            const { email, idFile } = emailBody;
             const { id } = request.user;
 
             await this.sendingEmailLinkUseCase.execute({
@@ -22,7 +22,6 @@ export class SendingEmailLinkController {
                 from: request.user.email,
                 email: email,
                 idFile: idFile,
-                experiedTime: experiedTime || '',
             });
 
             return response.status(201).json({ message: 'Email enviado com sucesso' });
