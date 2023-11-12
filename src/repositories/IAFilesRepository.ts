@@ -3,9 +3,9 @@ import { FileCreate, File } from "../entities/File";
 
 export interface IAFilesRepository {
     save(file: FileCreate): Promise<void>;
-    // findById(id: string): Promise<File | null>;
+    findById({ fileId, authorID }: { fileId: string, authorID: string }): Promise<File | null>;
     //findByName(name: string): Promise<File | null>;
     // delete(id: string): Promise<void>;
-    // update(file: File): Promise<File>;
+    updateExpirationDate({ fileId, authorId, newExperationDate }: { fileId: string, authorId: string, newExperationDate: Date }): Promise<File>;
     list(authorId: string): Promise<File[]>;
 }
