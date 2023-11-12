@@ -22,7 +22,8 @@ export async function ensureAuthenticated(request: Request, response: Response, 
             return response.status(401).json({ message: 'User not found' })
         }
         request.user = {
-            id: decoded.id as string
+            id: decoded.id as string,
+            email: user.email as string,
         }
         next()
     } catch (error) {
