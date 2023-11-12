@@ -2,7 +2,7 @@ FROM node:18
 
 
 # Create app directory
-WORKDIR /usr/app
+WORKDIR /app
 
 COPY package.json ./
 COPY package-lock.json ./
@@ -15,8 +15,8 @@ COPY . .
 
 RUN npm install
 RUN npx prisma generate
-RUN npm run build
+
 
 EXPOSE 3000
 
-CMD [ "npm", "run", "start" ]
+CMD [ "npm", "run", "dev:migrate" ]

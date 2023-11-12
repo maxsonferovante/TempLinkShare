@@ -7,6 +7,7 @@
     "dev": "tsx src/server.ts",
     "build": "tsup src/server.ts --format cjs --dts --minify --clean --sourcemap --legacy-output dist/server.js --dts-resolve --dts-resolve --dts-resolve.node --dts-resolve.fallback node_modules",
     "start": "node dist/server.js",
+    "dev:migrate": "prisma migrate deploy &&  npm run dev",
     "test": "jest --detectOpenHandles --verbose"
   },
   "keywords": [
