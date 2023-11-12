@@ -2,7 +2,7 @@ import handlebars from 'handlebars'
 import fs from 'fs/promises'
 import path from 'path'
 
-import { IDataSendMailTransporter } from '../providers/IAMailTransporter'
+import { IDataSendMailTransporter } from '../providers/IAMailTransporterProvider'
 export interface ICompiledTemplate {
     template: string;
     variables: IDataSendMailTransporter;
@@ -11,7 +11,7 @@ export interface ICompiledTemplate {
 export async function compileTemplate({ template, variables }: ICompiledTemplate) {
     try {
         const templateFileContent = await fs.readFile(
-            path.resolve(__dirname, `../templates/${template}`, 'utf-8'),
+            path.resolve(__dirname, `../templates/${template}`),
             'utf-8'
         )
         const mailTemplateParse = handlebars.compile(templateFileContent.toString())

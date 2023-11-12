@@ -1,10 +1,12 @@
 export interface IDataSendMailTransporter {
     to: string;
+    from: string;
     subject: string;
     body: string;
-    email: string;
+    url: string;
+    experiedTime?: Date;
 }
 
-export interface IAMailTransporter {
+export interface IAMailTransporterProvider {
     sendMail(data: IDataSendMailTransporter): Promise<void>;
 };
