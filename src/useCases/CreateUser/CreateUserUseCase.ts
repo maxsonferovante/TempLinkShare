@@ -1,4 +1,4 @@
-import { CryptoPassword } from "../../ultis/cryptoPassword";
+import { CryptoPassword } from "../../utils/cryptoPassword";
 
 import { UserCreate } from "../../entities/User";
 import { AppError } from "../../erros/AppError";

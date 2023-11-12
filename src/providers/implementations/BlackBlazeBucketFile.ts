@@ -40,7 +40,8 @@ export class BlackBlazeBucketFile implements IABucketFileProvider {
                         name: file.name,
                         size: data.ContentLength || 0,
                         mimetype: data.ContentType || '',
-                        location: `https://${process.env.BACKBLAZE_BUCKET}.s3.${process.env.REGION}.backblazeb2.com/${process.env.UPLOAD_FOLDER}/${file.name}`,
+                        location: `https://${process.env.BACKBLAZE_BUCKET}.s3.
+                        ${process.env.REGION}.backblazeb2.com/${process.env.UPLOAD_FOLDER}/${file.name}`,
                     })
 
                 } catch (NotFound) {

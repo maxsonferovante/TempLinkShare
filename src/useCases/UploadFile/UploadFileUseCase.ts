@@ -3,7 +3,7 @@ import { PostgresFileRepository } from "../../repositories/implementations/Postg
 import { IUploadFileRequestDTO } from "./IUploadFileRequestDTO";
 
 import { BlackBlazeBucketFile } from "../../providers/implementations/BlackBlazeBucketFile"
-import { normalizeName } from "../../ultis/normalizeName";
+import { normalizeName } from "../../utils/normalizeName";
 
 import { ExpirationService } from "../../services/ExpirationService/ExpirationService"
 import moment from "moment";

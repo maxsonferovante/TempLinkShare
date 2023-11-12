@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { DeleteObjectsCommand, ObjectIdentifier, S3Client } from "@aws-sdk/client-s3";
-import { filterFileIsAfterNow } from "../../ultis/filterFileIsAfterNow";
+import { filterFileIsAfterNow } from "../../utils/filterFileIsAfterNow";
 
 export class ExpirationService {
 

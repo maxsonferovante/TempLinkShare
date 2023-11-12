@@ -8,7 +8,7 @@ import { PrismaClient } from "@prisma/client";
 
 import { app } from "../../../src/app";
 import { UserCreate } from "../../../src/entities/User";
-import { CryptoPassword } from '../../../src/ultis/cryptoPassword'
+import { CryptoPassword } from '../../../src/utils/cryptoPassword'
 
 
 

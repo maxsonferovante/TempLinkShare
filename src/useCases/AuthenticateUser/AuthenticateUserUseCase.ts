@@ -1,5 +1,5 @@
 import { IAUserRepository } from "../../repositories/IAUserRepository";
-import { CryptoPassword } from "../../ultis/cryptoPassword";
+import { CryptoPassword } from "../../utils/cryptoPassword";
 import { IAuthenticateUserRequestDTO } from "./IAuthenticateUserRequestDTO";
 import { IAuthenticateUserResponseDTO } from "./IAuthenticateUserResponseDTO";
 import { sign } from "jsonwebtoken";
