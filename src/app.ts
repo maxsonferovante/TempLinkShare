@@ -1,12 +1,19 @@
 import { Request, Response } from "express";
 import { NextFunction } from "express-serve-static-core";
 import express from "express";
+
+import swaggerUi from 'swagger-ui-express';
 import { routes } from './routes';
 
 const app = express();
 
 
 app.use(express.json());
+app.use("/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(require('./swagger.json'))
+);
+
 app.use(routes);
 
 app.use((err: Error, request: Request, response: Response, next: NextFunction) => {

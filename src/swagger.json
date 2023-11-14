@@ -1,0 +1,370 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Temp Link Share -  API",
+        "description": "A API TempLinkShare permite o compartilhamento seguro e temporário de arquivos. Faça upload de arquivos e obtenha links de download com tempo de expiração. Ideal para compartilhar arquivos sensíveis, garantindo acesso restrito e temporário.",
+        "version": "1.0.0",
+        "contact": {
+            "name": "Maxson Ferovante",
+            "email": "https://github.com/maxsonferovante"
+        }
+    },
+    "tags": [
+        {
+            "name": "Usuários",
+            "description": "Endpoints relacionados a usuários."
+        },
+        {
+            "name": "Autenticação",
+            "description": "Endpoints relacionados a autenticação de usuários."
+        },
+        {
+            "name": "Arquivos",
+            "description": "Endpoints relacionados aos arquivos."
+        }
+    ],
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "Servidor Local"
+        }
+    ],
+    "paths": {
+        "/user/register": {
+            "post": {
+                "sumary": "Cria um novo usuário",
+                "description": "Trata a requisição de criação de um novo usuário.",
+                "tags": [
+                    "Usuários"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Usuario"
+                            },
+                            "examples": {
+                                "Exemplo de Usuário de Teste": {
+                                    "value": {
+                                        "name": "UsuariodeTeste",
+                                        "email": "teste@testes.com",
+                                        "password": "123456"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "required": true,
+                "responses": {
+                    "500": {
+                        "description": "Erro no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "description": "Mensagem de erro."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Mensagem de erro."
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "description": "O campo que gerou o erro."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Requisição inválida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Mensagem de erro."
+                                        },
+                                        "statusCode": {
+                                            "type": "number",
+                                            "description": "Código de status HTTP."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "description": "O id do usuário."
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "description": "O nome do usuário."
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "format": "email",
+                                            "description": "O endereço de e-mail do usuário."
+                                        },
+                                        "createdAt": {
+                                            "type": "string",
+                                            "description": "A data da criação do usuário."
+                                        },
+                                        "updatedAt": {
+                                            "type": "string",
+                                            "description": "A data da atualização do usuário."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/authenticate/login": {
+            "post": {
+                "summary": "Realizar login",
+                "description": "Autentica um usuário registrado.",
+                "tags": [
+                    "Autenticação"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "description": "O endereço de e-mail do usuário."
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "A senha do usuário."
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Exemplo de Usuário de Teste": {
+                                    "value": {
+                                        "email": "teste@testes.com",
+                                        "password": "123456"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "500": {
+                        "description": "Erro no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "description": "Mensagem de erro."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Mensagem de erro."
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "description": "O campo que gerou o erro."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Requisição inválida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Mensagem de erro."
+                                        },
+                                        "statusCode": {
+                                            "type": "number",
+                                            "description": "Código de status HTTP."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Erro de autenticação",
+                        "content": {
+                            "application.json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Mensagem de erro."
+                                        },
+                                        "statusCode": {
+                                            "type": "number",
+                                            "description": "Código de status HTTP."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "id": {
+                                                "type": "string",
+                                                "description": "O id do usuário."
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "format": "email",
+                                                "description": "O nome do usuário."
+                                            }
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "description": "O token de autenticação."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+            "Usuario": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "O nome do usuário."
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "O endereço de e-mail do usuário."
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "A senha do usuário."
+                    }
+                },
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ]
+            },
+            "Login": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "O endereço de e-mail do usuário."
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "A senha do usuário."
+                    }
+                },
+                "required": [
+                    "email",
+                    "password"
+                ]
+            },
+            "Arquivo": {
+                "type": "object",
+                "properties": {
+                    "responseUploaded": {
+                        "type": "object",
+                        "properties": {
+                            "url": {
+                                "type": "string",
+                                "description": "A url do arquivo."
+                            },
+                            "path": {
+                                "type": "string",
+                                "description": "O caminho do arquivo."
+                            }
+                        }
+                    },
+                    "expirationDate": {
+                        "type": "string",
+                        "description": "A data de expiração do arquivo."
+                    }
+                }
+            },
+            "Erro": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "Mensagem de erro."
+                    }
+                }
+            }
+        }
+    }
+}
