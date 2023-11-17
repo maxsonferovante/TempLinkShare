@@ -15,7 +15,13 @@ export async function ensureAuthenticated(request: Request, response: Response, 
             return response.status(401).json({ message: 'Token malformatted' })
         }
         const token = authHeader.replace('Bearer ', '').trim()
-        const decoded = verify(token, process.env.SECRECT_TOKEN || '') as JwtPayload
+        let decoded: JwtPayload
+        try {
+            decoded = verify(token, process.env.SECRECT_TOKEN || '') as JwtPayload
+        } catch (TokenExpiredError) {
+            return response.status(401).json({ message: 'Token expired. Log in again.' })
+        }
+
         const userRepository = new PostgresUserRepository()
         const user = await userRepository.findById(decoded.id)
         if (!user) {
