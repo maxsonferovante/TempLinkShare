@@ -19,7 +19,7 @@ export async function ensureAuthenticated(request: Request, response: Response, 
         try {
             decoded = verify(token, process.env.SECRECT_TOKEN || '') as JwtPayload
         } catch (TokenExpiredError) {
-            return response.status(401).json({ message: 'Token expired. Log in again.' })
+            throw new AppError('Token expired', 403)
         }
 
         const userRepository = new PostgresUserRepository()
