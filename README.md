@@ -8,15 +8,86 @@
 
 <div align="justify">
 
+## Sobre o projeto
+
 O TempLinkShare é meu mais recente projeto pessoal, uma API que permite o compartilhamento seguro e temporário de arquivos. Suas principais funcionalidades incluem o upload de arquivos, a geração de links de download temporários e o compartilhamento de arquivos de maneira controlada, tudo com gerenciamento da validade dos links.
 
-Na jornada de desenvolvimento, estou aplicando meus conhecimentos em testes unitários e de integração com o Jest, garantindo que a API funcione de maneira confiável e segura à medida que novas funcionalidades são implementadas.
+## Tecnologias Utilizadas 
 
-Destaco minhas escolhas técnicas, como a adoção do TypeScript para otimizar o processo de codificação e o princípio SOLID como padrão de design, que proporciona escalabilidade e legibilidade por meio dos UseCases. Uso o Express.js para facilitar a construção de APIs REST e o JWT para reforçar a segurança. Os arquivos são armazenados temporariamente em Bucket hospedado na AWS - S3. Além disso, o Prisma é meu ORM escolhido para gerenciar e modelar o banco de dados PostgreSQL, conhecido por seu desempenho.
+[![My Skills](https://skillicons.dev/icons?i=typescript,nodejs,express,postgres,prisma,docker,aws,jest,git,github,swagger)](https://skillicons.dev)
 
-Para a gestão das tarefas, tenho utilizado Kanban com o auxílio do Trello, o que tem permitido o exercício da autogestão e disciplina no acompanhamento e documentação das tarefas necessárias para a conclusão deste projeto.
 
-Este projeto reflete meu compromisso com a excelência técnica e minha paixão por criar soluções que tornam a vida mais simples. Se você estiver interessado em conhecê-lo mais de perto, convido-o a explorar o repositório. E, quando for concluído, fornecerei o link para o deploy e toda a documentação necessária para seu uso.
+## Como executar o projeto 
 
-Esta experiência tem sido uma oportunidade valiosa para expandir meu conhecimento e habilidades, demonstrando minha dedicação ao desenvolvimento de soluções inovadoras e confiáveis.
+⚠️ Para a execução do projeto, é necessário ter o [Node.js](https://nodejs.org/en) instalado em sua máquina.
+
+A porta padrão para acesso é ` http://localhost:3000 `
+
+1) Faça um clone do projeto
+
+```bash
+git clone https://github.com/maxsonferovante/TempLinkShare.git
+```
+
+2) Abra o diretório do projeto
+
+```bash
+cd templinkshare
+```
+
+3) Instale as dependências utilizando o comando:
+
+```bash
+npm install
+```
+
+4) Inicialize o servidor local:
+
+```bash
+npm run dev
+```
+
+
+5) Rodar os testes :
+
+```bash
+npm run test
+```
+
+## Como executar o projeto - Docker Compose
+
+```bash
+docker compose up
+```
+
+## Documentação - Swagger 
+
+Este projeto foi documentado utilizando o Swagger.
+
+![](media/swagger.gif)
+
+Para visualizar o Swagger no servidor utilize [Swagger]()
+
+Para acessar a documentação localmente, inicialize o projeto com `npm run dev`;
+
+Abra `http://localhost:3000/api-docs` no navegador para visualizar localmente.
+
+## Deploy
+
+[Deploy]()
+
+## Como contribuir para o projeto
+
+1. Faça um fork do projeto.
+2. Crie uma nova branch com as suas alterações: `git checkout -b my-feature`
+3. Salve as alterações e crie uma mensagem de commit contanto o que você fez: `git commit -m "feature: My new feature"`
+4. Envie as alterações: `git push origin my-feature`
+
+## Autoras
+
+[Maxson Almeida](https://github.com/maxsonferovante)
+
+## Licença
+
+[MIT](LICENSE)
 </div>
