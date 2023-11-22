@@ -282,6 +282,265 @@
                     }
                 }
             }
+        },
+        "/file/upload": {
+            "post": {
+                "summary": "Realizar upload dp arquivo",
+                "description": "Realiza o upload do arquivo.",
+                "tags": [
+                    "Arquivos"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary",
+                                        "description": "O arquivo a ser enviado."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "500": {
+                        "description": "Erro no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "description": "Mensagem de erro."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Mensagem de erro."
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "description": "O campo que gerou o erro."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Requisição inválida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Mensagem de erro."
+                                        },
+                                        "statusCode": {
+                                            "type": "number",
+                                            "description": "Código de status HTTP."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Erro de autenticação",
+                        "content": {
+                            "application.json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Mensagem de erro."
+                                        },
+                                        "statusCode": {
+                                            "type": "number",
+                                            "description": "Código de status HTTP."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "id": {
+                                                "type": "string",
+                                                "description": "O id do usuário."
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "format": "email",
+                                                "description": "O nome do usuário."
+                                            }
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "description": "O token de autenticação."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/file/list": {
+            "get": {
+                "summary": "Lista os arquivos do usuário.",
+                "description": "Lista os arquivos do usuário.",
+                "tags": [
+                    "Arquivos"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {},
+                "responses": {
+                    "500": {
+                        "description": "Erro no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "description": "Mensagem de erro."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Mensagem de erro."
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "description": "O campo que gerou o erro."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Requisição inválida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Mensagem de erro."
+                                        },
+                                        "statusCode": {
+                                            "type": "number",
+                                            "description": "Código de status HTTP."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Erro de autenticação",
+                        "content": {
+                            "application.json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Mensagem de erro."
+                                        },
+                                        "statusCode": {
+                                            "type": "number",
+                                            "description": "Código de status HTTP."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "description": "O id do arquivo."
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "description": "O nome do arquivo."
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "description": "O caminho do arquivo."
+                                        },
+                                        "url": {
+                                            "type": "string",
+                                            "description": "A url do arquivo."
+                                        },
+                                        "expirationDate": {
+                                            "type": "string",
+                                            "description": "A data de expiração do arquivo."
+                                        },
+                                        "createdAt": {
+                                            "type": "string",
+                                            "description": "A data da criação do arquivo."
+                                        },
+                                        "updatedAt": {
+                                            "type": "string",
+                                            "description": "A data da atualização do arquivo."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
