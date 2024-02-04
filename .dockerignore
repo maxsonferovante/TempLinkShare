@@ -1,5 +1,4 @@
 node_modules
-dist
 media
 npm-debug.log
 Dockerfile
