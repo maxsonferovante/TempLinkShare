@@ -7,6 +7,7 @@ import { ValidationError } from 'yup';
 
 
 export class AuthenticateUserController {
+    
     constructor(
         private authenticateUserUseCase: AuthenticateUserUseCase,
     ) { }
@@ -30,6 +31,34 @@ export class AuthenticateUserController {
                     })
                 })
             }
+            if (error instanceof AppError) {
+                return response.status(error.statusCode).json({
+                    message: error.message,
+                    statusCode: error.statusCode,
+                })
+            }
+            return response.status(500).json({ error: 'Internal Server Error' })
+        }
+    }
+
+    async refreshtoken(request: Request, response: Response) {
+        try {
+            const tokenInvalid = request.headers.authorization;
+
+            if (!tokenInvalid) {
+                throw new AppError('Token is missing', 401);
+            }
+            if (tokenInvalid.split(' ')[0] !== 'Bearer') {
+                throw new AppError('Token malformatted', 401);
+            }
+            const token = tokenInvalid.replace('Bearer ', '').trim();
+            
+            const newToken = await this.authenticateUserUseCase.refreshtoken(token);
+
+            response.setHeader('Authorization', 'Bearer ' + newToken.token);
+            return response.status(200).json(newToken);
+
+        } catch (error) {
             if (error instanceof AppError) {
                 return response.status(error.statusCode).json({
                     message: error.message,

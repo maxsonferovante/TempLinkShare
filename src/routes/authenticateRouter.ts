@@ -13,5 +13,10 @@ authenticateRouter.post(
     }
 );
 
+authenticateRouter.get(
+    "/refresh",
+    (request: Request, response: Response) => {
+        return authenticateUserController.refreshtoken(request, response);}
+);
 
 export { authenticateRouter };
