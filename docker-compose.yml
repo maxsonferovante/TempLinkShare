@@ -19,11 +19,12 @@ services:
     container_name: templinkshare-postgres
     restart: always
     ports:
-      - 5432:5432
+      - 5433:5433
     environment:
       POSTGRES_USER: johndoe
       POSTGRES_PASSWORD: randompassword
       POSTGRES_DB: mydb
+      PGTZ: America/Sao_Paulo
     volumes:
       - db-data:/postgresql/data
     networks:

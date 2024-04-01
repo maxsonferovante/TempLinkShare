@@ -1,8 +1,11 @@
-FROM node:20-slim
+FROM node:21-alpine3.18
 
 
 # Create app directory
 WORKDIR /app
+
+# Instale o OpenSSL
+RUN apt-get update -y && apt-get install -y openssl
 
 COPY package.json ./
 COPY package-lock.json ./
@@ -14,6 +17,7 @@ COPY .env ./
 COPY . .
 
 RUN npm install
+RUN apt-get update -y && apt-get install -y openssl
 RUN npx prisma generate
 RUN npm run build
 
