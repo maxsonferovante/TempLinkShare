@@ -21,6 +21,7 @@ RUN apt-get update -y && apt-get install -y openssl
 RUN npx prisma generate
 RUN npm run build
 
-EXPOSE 3000
+EXPOSE 3000/tcp
+EXPOSE 3000/udp
 
 CMD [ "npm", "run", "start" ]
