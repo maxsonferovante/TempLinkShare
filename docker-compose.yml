@@ -14,21 +14,21 @@ services:
     networks:
       - templinkshare-network
 
-  postgres:
-    image: postgres
-    container_name: templinkshare-postgres
-    restart: always
-    ports:
-      - 5433:5433
-    environment:
-      POSTGRES_USER: johndoe
-      POSTGRES_PASSWORD: randompassword
-      POSTGRES_DB: mydb
-      PGTZ: America/Sao_Paulo
-    volumes:
-      - db-data:/postgresql/data
-    networks:
-      - templinkshare-network
+  # postgres:
+  #   image: postgres
+  #   container_name: templinkshare-postgres
+  #   restart: always
+  #   ports:
+  #     - 5433:5433
+  #   environment:
+  #     POSTGRES_USER: johndoe
+  #     POSTGRES_PASSWORD: randompassword
+  #     POSTGRES_DB: mydb
+  #     PGTZ: America/Sao_Paulo
+  #   volumes:
+  #     - db-data:/postgresql/data
+  #   networks:
+  #     - templinkshare-network
 
 networks:
   templinkshare-network:
